@@ -1,0 +1,36 @@
+version: 2
+
+name: "default"
+seed: 0
+gpu_id: 0
+training_config:
+  n_epoch: 100
+  batch_size: 2
+  num_worker: 4
+  optimizer: "adamw"
+  init_lr: 0.0001
+  weight_decay: 0.01
+  betas: [0.5, 0.999]
+  lr_scheduler_config:
+    policy: "linear"
+    n_epoch_decay: 100
+
+dataset_config:
+  train_A_space_data_root: "data/cityscapes/train_label"
+  train_B_space_data_root: "data/cityscapes/train_img"
+  A_space_norms: [0., 33.]
+  B_space_norms: [0., 255.]
+  load_dsize: [256, 128]
+  re_dsize: [256, 128]
+  aug_config: "paired_synthesis"
+
+  test_A_space_data_root: "data/cityscapes/test_label"
+
+model_config:
+  generator:
+    config: "resnet_d2"
+    input_nc: 1
+    output_nc: 3
+    img_dsize: [256, 128]
+  discriminator:
+    input_nc: 4
